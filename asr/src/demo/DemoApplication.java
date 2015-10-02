@@ -37,7 +37,7 @@ public class DemoApplication {
 	public static void main(String[] args) throws Exception {
 
 		
-		System.out.println("Cat,,बिल्ली,,,");
+		
 		System.out.println("Please provide the path to actual bible text file");
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
