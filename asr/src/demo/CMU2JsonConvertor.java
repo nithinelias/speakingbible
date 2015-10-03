@@ -94,7 +94,21 @@ public class CMU2JsonConvertor {
 
 					String[] arr = line.split("\\s+");
 
-					String val = arr[2].substring(1, arr[2].length() - 1);
+					String val = null;
+					if (arr.length == 2) {
+						val = arr[1].substring(1, arr[1].length() - 1);
+					}
+
+					else if (arr.length == 3) {
+						val = arr[2].substring(1, arr[2].length() - 1);
+					}
+
+					else {
+						System.err
+								.println("Invalid format of CMU file expected format is american  [1690:2190] . The actual word followed by one or more white spaces followed by the timing info enclosed in square brackets separated by : ");
+						System.exit(1);
+					}
+
 					String[] start_end = val.split(":");
 					String start = start_end[0];
 					String end = start_end[1];
