@@ -1,9 +1,11 @@
 package demo;
 
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +13,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
 
@@ -39,7 +40,8 @@ public class CMU2JsonConvertor {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		String actual = in.readLine();
 
-		BufferedReader read = new BufferedReader(new FileReader(actual));
+		BufferedReader read = new BufferedReader(new InputStreamReader(
+				new FileInputStream(actual), "UTF8"));
 		String ab = null;
 		StringBuffer sb = new StringBuffer();
 		while ((ab = read.readLine()) != null) {
@@ -69,8 +71,9 @@ public class CMU2JsonConvertor {
 
 		String dir2 = in.readLine();
 
-		JsonGenerator jGenerator = jfactory.createJsonGenerator(new File(dir1),
-				JsonEncoding.UTF8);
+		JsonGenerator jGenerator = jfactory
+				.createJsonGenerator(new OutputStreamWriter(
+						new FileOutputStream(dir1), "UTF-8"));
 		jGenerator.writeStartObject();
 		int counter = 0;
 		jGenerator.writeFieldName("Verses");
@@ -98,24 +101,21 @@ public class CMU2JsonConvertor {
 
 					jGenerator.writeStartObject();
 					jGenerator.writeFieldName("word");
-					jGenerator.writeUTF8String(listVal.getBytes(), 0,
-							listVal.length());
+					jGenerator.writeString(listVal);
 					jGenerator.writeFieldName("strt");
-					jGenerator.writeUTF8String(start.getBytes(), 0,
-							start.length());
+					jGenerator.writeString(start);
 					jGenerator.writeFieldName("end");
-					jGenerator.writeUTF8String(end.getBytes(), 0, end.length());
+					jGenerator.writeString(end);
 					jGenerator.writeEndObject();
 
 				} else {
 					jGenerator.writeStartObject();
 					jGenerator.writeFieldName("word");
-					jGenerator.writeUTF8String(listVal.getBytes(), 0,
-							listVal.length());
+					jGenerator.writeString(listVal);
 					jGenerator.writeFieldName("strt");
-					jGenerator.writeUTF8String("".getBytes(), 0, 0);
+					jGenerator.writeString("");
 					jGenerator.writeFieldName("end");
-					jGenerator.writeUTF8String("".getBytes(), 0, 0);
+					jGenerator.writeString("");
 					jGenerator.writeEndObject();
 				}
 
